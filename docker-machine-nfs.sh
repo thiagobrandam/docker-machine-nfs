@@ -195,14 +195,15 @@ verifyNFSMount()
 
     while true; do
         if [ "$(isNFSMounted)" = "false" ]; then
-            case $retries in
-            [0-2])
+            if [ "$retries" -lt 3 ]; then
                 retries=$(($retries + 1));
-                sleep(1);
-                ;;
-            3)
-                echoError "Cannot detect the NFS mount :("; exit 1
-            esac
+                sleep 2;
+            else
+                echoError "Cannot detect the NFS mount :(";
+                exit 1;
+            fi
+        else
+          break;
         fi
     done
 
