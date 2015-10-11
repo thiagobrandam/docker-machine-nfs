@@ -198,11 +198,13 @@ verifyNFSMount()
             case $retries in
             [0-2])
                 retries=$(($retries + 1));
-                sleep(1);
+                sleep 2;
                 ;;
             3)
                 echoError "Cannot detect the NFS mount :("; exit 1
             esac
+        else
+          break;
         fi
     done
 
